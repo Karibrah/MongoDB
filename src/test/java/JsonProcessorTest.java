@@ -6,8 +6,8 @@ public class JsonProcessorTest {
     public void validateJsonFileSuccessTest() {
         JsonProcessor jsonProcessor = new JsonProcessor();
         String correctJson = "{\n" +
-                "  \"FirstName\": \"karim\",\n" +
-                "  \"LastName\": \"Ibrahim\",\n" +
+                "  \"FirstName\": \"abc\",\n" +
+                "  \"LastName\": \"defg\",\n" +
                 "  \"Address\":\n" +
                 "    {\n" +
                 "      \"Line1\": \"abc\",\n" +
