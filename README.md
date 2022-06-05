@@ -7,7 +7,7 @@ brew install gradle
 ```
 **In terminal**:
 
-first build project using:
+Go to program directory then build project using:
 ```bash
 ./gradlew clean build
 ```
