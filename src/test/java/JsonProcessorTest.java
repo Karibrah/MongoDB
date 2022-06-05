@@ -1,10 +1,10 @@
-import org.mongo.JsonFlatterMongo;
 import org.junit.jupiter.api.Test;
+import org.mongo.JsonProcessor;
 
-public class JsonFlatterMongoTest {
+public class JsonProcessorTest {
     @Test
     public void validateJsonFileSuccessTest() {
-        JsonFlatterMongo jsonFlatterMongo = new JsonFlatterMongo();
+        JsonProcessor jsonProcessor = new JsonProcessor();
         String correctJson = "{\n" +
                 "  \"FirstName\": \"karim\",\n" +
                 "  \"LastName\": \"Ibrahim\",\n" +
@@ -15,28 +15,40 @@ public class JsonFlatterMongoTest {
                 "    }\n" +
                 "}";
 
-        assert (jsonFlatterMongo.isValidJsonFile(correctJson) == true);
+        assert (jsonProcessor.isValidJsonFile(correctJson) == true);
     }
 
     @Test
-    public void validateJsonFileFailedTest() {
-        JsonFlatterMongo jsonFlatterMongo = new JsonFlatterMongo();
+    public void validateJsonFormatFileFailedTest() {
+        JsonProcessor jsonProcessor = new JsonProcessor();
+        String invalidJson =
+                "{\n" +
+                        "  \"FirstName\" \"error\": \"fname\",\n" +
+                        "  \"LastName\": \"lname\",\n" +
+                        "  \"Address\":\n" +
+                        "\n" +
+                        "      \"Line1\": \"abc\",\n" +
+                        "      \"state\": \"CA\"\n" +
+                        "    }\n" +
+                        "}";
+
+        assert (jsonProcessor.isValidJsonFile(invalidJson) == false);
+    }
+
+    @Test
+    public void validateJsonContainArrayFileFailedTest() {
+        JsonProcessor jsonProcessor = new JsonProcessor();
         String invalidJson = "{\n" +
-                "  \"FirstName\" \"error\": \"fname\",\n" +
-                "  \"LastName\": \"lname\",\n" +
-                "  \"Address\":\n" +
-                "\n" +
-                "      \"Line1\": \"abc\",\n" +
-                "      \"state\": \"CA\"\n" +
-                "    }\n" +
+                "Service\": [\"Site SEO Review\", \"abc\"]" +
                 "}";
 
-        assert (jsonFlatterMongo.isValidJsonFile(invalidJson) == false);
+        assert (jsonProcessor.isValidJsonFile(invalidJson) == false);
     }
+
 
     @Test
     public void flatJsonFileSuccessTest() {
-        JsonFlatterMongo jsonFlatterMongo = new JsonFlatterMongo();
+        JsonProcessor jsonProcessor = new JsonProcessor();
         String json = "{\n" +
                 "  \"FirstName\": \"fname\",\n" +
                 "  \"Address\":\n" +
@@ -46,14 +58,14 @@ public class JsonFlatterMongoTest {
                 "    }\n" +
                 "}";
 
-        String flatJson = jsonFlatterMongo.flatJsonFile(json);
+        String flatJson = jsonProcessor.flatJsonFile(json);
         String expectedFlatJson = "{\"FirstName\":\"fname\",\"Address.Line1\":\"abc\",\"Address.state\":\"CA\"}";
         assert (expectedFlatJson.equals(flatJson));
     }
 
     @Test
     public void flatJsonFileFailedTest() {
-        JsonFlatterMongo jsonFlatterMongo = new JsonFlatterMongo();
+        JsonProcessor jsonProcessor = new JsonProcessor();
         String invalidJson = "{\n" +
                 "  \"FirstName\": \"fname\",\n" +
                 "  \"Address\":\n" +
@@ -63,7 +75,7 @@ public class JsonFlatterMongoTest {
                 "    }\n" +
                 "}";
 
-        String flatJson = jsonFlatterMongo.flatJsonFile(invalidJson);
+        String flatJson = jsonProcessor.flatJsonFile(invalidJson);
         assert (flatJson == null);
     }
 

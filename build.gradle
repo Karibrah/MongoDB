@@ -21,7 +21,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'com.github.wnameless:json-flattener:0.2.2'
     implementation 'com.github.wnameless.json:json-flattener:0.12.0'
-    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'org.json:json:20171018'
     implementation 'com.google.code.gson:gson:2.8.6'
 }
 
